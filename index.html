@@ -338,7 +338,7 @@ db.collection('reviews').orderBy('timestamp', 'desc').onSnapshot(snapshot => {
         const review = doc.data();
         html += `
             <div class="box">
-                <img src="images/pic-1.png" alt="">
+                <img src="many.jpg" alt="">
                 <h3>${review.name}</h3>
                 <p>${review.message}</p>
                 <div class="stars">
@@ -381,7 +381,7 @@ snapshot.docs.forEach(doc => {
             </div>
             <p>${review.message}</p>
             <div class="user">
-                <img src="images/pic-1.png" alt="Profile Picture" class="profile-pic">
+                <img src="many.jpg" alt="Profile Picture" class="profile-pic">
                 <div class="user-info">
                     <h3>${review.name}</h3>
                     <span>Happy Customer</span>
