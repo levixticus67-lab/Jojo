@@ -38,7 +38,7 @@
             <p>hhhhhhhhhhhhhhhhnnnnnnnnnjjjjjjjjjjjj</p>
             <form action="https://formspree.io/f/mvzdqbdb" 
 method="POST">
-     <input type="hidden" name="cart_items" Id="cart-data" value="">
+     <input type="hidden" name="cart_items" Id="cart-data" value="no items selected">
              <button type="submit" class="btn">shop now</button>
         </form>
         </div>
@@ -106,7 +106,7 @@ method="POST">
                     <img src="mouth.jpg" alt="">
                     <div class="icons">
                         <a href="#" class="fas fa-heart"></a>
-                        <a href="#" class="cart-btn">add to cart</a>
+                        <a href="#" class="cart-btn add-btn">add to cart</a>
                         <a href="#" class="fas fa-share"></a>
                     </div>
                 </div>
@@ -121,7 +121,7 @@ method="POST">
                     <img src="green-humi.jpg" alt="">
                     <div class="icons">
                         <a href="#" class="fas fa-heart"></a>
-                        <a href="#" class="cart-btn">add to cart</a>
+                        <a href="#" class="cart-btn add-btn">add to cart</a>
                         <a href="#" class="fas fa-share"></a>
                     </div>
                 </div>
@@ -136,7 +136,7 @@ method="POST">
                     <img src="showergel.jpg" alt="">
                     <div class="icons">
                         <a href="#" class="fas fa-heart"></a>
-                        <a href="#" class="cart-btn">add to cart</a>
+                        <a href="#" class="cart-btn add-btn">add to cart</a>
                         <a href="#" class="fas fa-share"></a>
                     </div>
                 </div>
@@ -151,7 +151,7 @@ method="POST">
                     <img src="car-swing.jpg" alt="">
                     <div class="icons">
                         <a href="#" class="fas fa-heart"></a>
-                        <a href="#" class="cart-btn">add to cart</a>
+                        <a href="#" class="cart-btn add-btn">add to cart</a>
                         <a href="#" class="fas fa-share"></a>
                     </div>
                 </div>
@@ -166,7 +166,7 @@ method="POST">
                     <img src="darkspray.jpg" alt="">
                     <div class="icons">
                         <a href="#" class="fas fa-heart"></a>
-                        <a href="#" class="cart-btn">add to cart</a>
+                        <a href="#" class="cart-btn add-btn">add to cart</a>
                         <a href="#" class="fas fa-share"></a>
                     </div>
                 </div>
@@ -181,7 +181,7 @@ method="POST">
                     <img src="oilfume.jpg" alt="">
                     <div class="icons">
                         <a href="#" class="fas fa-heart"></a>
-                        <a href="#" class="cart-btn">add to cart</a>
+                        <a href="#" class="cart-btn add-btn">add to cart</a>
                         <a href="#" class="fas fa-share"></a>
                     </div>
                 </div>
@@ -196,7 +196,7 @@ method="POST">
                     <img src="deodorant.jpg" alt="">
                     <div class="icons">
                         <a href="#" class="fas fa-heart"></a>
-                        <a href="#" class="cart-btn">add to cart</a>
+                        <a href="#" class="cart-btn add-btn">add to cart</a>
                         <a href="#" class="fas fa-share"></a>
                     </div>
                 </div>
@@ -211,7 +211,7 @@ method="POST">
                     <img src="black-spray.jpg" alt="">
                     <div class="icons">
                         <a href="#" class="fas fa-heart"></a>
-                        <a href="#" class="cart-btn">add to cart</a>
+                        <a href="#" class="cart-btn add-btn">add to cart</a>
                         <a href="#" class="fas fa-share"></a>
                     </div>
                 </div>
@@ -336,28 +336,30 @@ method="POST">
      <div class="credit"> created by <span> Jojo collections </span> | all rights reserved </div>
     </section>
     <!-- footer section ends -->
-    <!-- script starts -->
-<script>
-    let cart = [];
 
-    // 1. Listen for "Add to Cart" clicks
-    document.querySelectorAll('.btn').forEach(button => {
-        if (button.innerText.toLowerCase().includes('add to cart')) {
-            button.addEventListener('click', (e) => {
-                e.preventDefault(); // Stop page from jumping
-                
-                // Find the name of the perfume (usually in the <h3> above the button)
-                const productName = button.parentElement.querySelector('h3').innerText;
-                
-                cart.push(productName);
-                alert(productName + " added to cart!");
-                
-                // 2. Put the list into the hidden form field
-                document.getElementById('cart-data').value = cart.join(', ');
-            });
-        }
+    <!-- script starts -->
+     <script>
+    let cart = [];
+    const cartInput = document.getElementById('cart-data');
+
+    document.querySelectorAll('.add-btn').forEach(link => {
+        link.addEventListener('click', (e) => {
+            e.preventDefault();
+            
+            // This navigates from the icon link to the product name
+            const productBox = link.closest('.box');
+            const productName = productBox.querySelector('.content h3').innerText;
+            
+            cart.push(productName);
+            
+            // Updates the hidden input in your "Shop Now" form
+            cartInput.value = cart.join(', ');
+            
+            alert(productName + " added to cart!");
+        });
     });
 </script>
+
   <!-- script ends -->
 </body>
 </html>
