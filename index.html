@@ -38,7 +38,7 @@
             <p>hhhhhhhhhhhhhhhhnnnnnnnnnjjjjjjjjjjjj</p>
             <form action="https://formspree.io/f/mvzdqbdb" 
 method="POST">
-     <input type="hidden" name="action" value="Shop Now Clicked">
+     <input type="hidden" name="cart_items" Id="cart-data" value="">
              <button type="submit" class="btn">shop now</button>
         </form>
         </div>
@@ -336,5 +336,28 @@ method="POST">
      <div class="credit"> created by <span> Jojo collections </span> | all rights reserved </div>
     </section>
     <!-- footer section ends -->
+    <!-- script starts -->
+<script>
+    let cart = [];
+
+    // 1. Listen for "Add to Cart" clicks
+    document.querySelectorAll('.btn').forEach(button => {
+        if (button.innerText.toLowerCase().includes('add to cart')) {
+            button.addEventListener('click', (e) => {
+                e.preventDefault(); // Stop page from jumping
+                
+                // Find the name of the perfume (usually in the <h3> above the button)
+                const productName = button.parentElement.querySelector('h3').innerText;
+                
+                cart.push(productName);
+                alert(productName + " added to cart!");
+                
+                // 2. Put the list into the hidden form field
+                document.getElementById('cart-data').value = cart.join(', ');
+            });
+        }
+    });
+</script>
+  <!-- script ends -->
 </body>
 </html>
