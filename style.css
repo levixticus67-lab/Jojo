@@ -402,6 +402,29 @@ section{
 .footer .credit span{
     color: var(--pink);
 }
+/* Fix the dynamic profile picture in reviews */
+.review .box-container .box .user .profile-pic {
+    height: 5rem;
+    width: 5rem;
+    border-radius: 50%;
+    object-fit: cover;
+    border: .2rem solid var(--main-color); /* Add a little border to the image */
+}
+
+/* Align the user info */
+.review .box-container .box .user .user-info h3 {
+    font-size: 1.8rem;
+    color: #333;
+}
+
+/* Style the Review Form for better visibility */
+.review #add-review-form .box {
+    text-transform: none; /* Keep text case-sensitive */
+    border: 1px solid #ddd; /* Darker border against the white */
+    margin: 1rem 0;
+    width: 100%;
+}
+
 
 
 
