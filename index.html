@@ -227,59 +227,15 @@ method="POST">
     <!-- review section starts -->
      <section class="review" id="review">
         <h1 class="heading"> customer's <span>review</span></h1>
-        <div class="box-container">
-            <div class="box">
-                <div class="stars">
-                    <i class="fas fa-star"></i>
-                    <i class="fas fa-star"></i>
-                    <i class="fas fa-star"></i>
-                    <i class="fas fa-star"></i>
-                </div>
-                <p>hgdtftdcgvn hgdklghfcfcdxjgcggx wdudja</p>
-                <div class="user">
-                    <img src="puppy.jpg" alt="">
-                    <div class="user-info">
-                        <h3>john deo</h3>
-                        <span>happy customer</span>
-                    </div>
-                </div>
-                <span class="fas fa-quote-right"></span>
-            </div>
-               <div class="box">
-                <div class="stars">
-                    <i class="fas fa-star"></i>
-                    <i class="fas fa-star"></i>
-                    <i class="fas fa-star"></i>
-                    <i class="fas fa-star"></i>
-                </div>
-                <p>hgdtftdcgvn hgdklghfcfcdxjgcggx wdudja</p>
-                <div class="user">
-                    <img src="puppy.jpg" alt="">
-                    <div class="user-info">
-                        <h3>john deo</h3>
-                        <span>happy customer</span>
-                    </div>
-                </div>
-                <span class="fas fa-quote-right"></span>
-            </div>
-               <div class="box">
-                <div class="stars">
-                    <i class="fas fa-star"></i>
-                    <i class="fas fa-star"></i>
-                    <i class="fas fa-star"></i>
-                    <i class="fas fa-star"></i>
-                </div>
-                <p>hgdtftdcgvn hgdklghfcfcdxjgcggx wdudja</p>
-                <div class="user">
-                    <img src="puppy.jpg" alt="">
-                    <div class="user-info">
-                        <h3>john deo</h3>
-                        <span>happy customer</span>
-                    </div>
-                </div>
-                <span class="fas fa-quote-right"></span>
-            </div>
-        </div>
+        <div class="box-container review-container"></div>
+      <div class="box" style="margin-top: 2rem; background: #fff; padding: 2rem; border-radius: .5rem; box-shadow: 0 .5rem 1rem rgba(0,0,0,.1);">
+    <form id="add-review-form">
+        <h3 style="font-size: 2rem; color: #333;">Leave a Review</h3>
+        <input type="text" name="name" placeholder="your name" required style="width:100%; margin:1rem 0; padding:1.2rem; font-size:1.6rem; border:1px solid #ccc;">
+        <textarea name="comment" placeholder="your comment" required style="width:100%; margin:1rem 0; padding:1.2rem; font-size:1.6rem; border:1px solid #ccc; height:10rem;"></textarea>
+        <button type="submit" class="btn">Post Review</button>
+    </form>
+</div>
      </section>
     <!-- review section ends -->
     <!-- contact section starts -->
@@ -338,7 +294,24 @@ method="POST">
     <!-- footer section ends -->
 
     <!-- script starts -->
-     <script>
+     <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore-compat.js"></script>
+
+<script>
+  const firebaseConfig = {
+    apiKey: "AIzaSyA9ER2RfVM4Iw7Ka6eQ100KDnbuFI31_pg", // Paste your API Key here
+    authDomain: "jojo-collection.firebaseapp.com",
+    projectId: "jojo-collection",
+    storageBucket: "jojo-collection.appspot.com",
+    messagingSenderId: "123456789",
+    appId: "1:469101720449:web:c668b39259ea141f69ee80" // Paste your App ID here
+  };
+
+  // 3. This line actually "turns on" the connection
+  firebase.initializeApp(firebaseConfig);
+  const db = firebase.firestore();
+  
+
     let cart = [];
     const cartInput = document.getElementById('cart-data');
 
@@ -357,6 +330,66 @@ method="POST">
             
             alert(productName + " added to cart!");
         });
+    });
+   // This tells the site: "Whenever a review is added to the 'reviews' collection, update the page"
+db.collection('reviews').orderBy('timestamp', 'desc').onSnapshot(snapshot => {
+    let html = '';
+    snapshot.docs.forEach(doc => {
+        const review = doc.data();
+        html += `
+            <div class="box">
+                <img src="images/pic-1.png" alt="">
+                <h3>${review.name}</h3>
+                <p>${review.message}</p>
+                <div class="stars">
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                </div>
+            </div>`;
+    });
+    document.querySelector('.review-container').innerHTML = html;
+});
+    const reviewForm = document.querySelector('#add-review-form');
+
+    // SAVE TO FIREBASE
+    reviewForm.addEventListener('submit', (e) => {
+        e.preventDefault();
+        db.collection('reviews').add({
+            name: reviewForm.name.value,
+            message: reviewForm.comment.value,
+            timestamp: firebase.firestore.FieldValue.serverTimestamp()
+        }).then(() => {
+            reviewForm.reset();
+            alert("Thank you, Levi! Your review is live.");
+        });
+    });
+
+    // SHOW FROM FIREBASE
+    db.collection('reviews').orderBy('timestamp', 'desc').onSnapshot(snapshot => {
+        let html = '';
+        snapshot.docs.forEach(doc => {
+            const review = doc.data();
+            html += `
+                <div class="box">
+                    <div class="stars">
+                        <i class="fas fa-star"></i><i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i><i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                    </div>
+                    <p>${review.message}</p>
+                    <div class="user">
+                        <img src="images/pic-1.png" alt="">
+                        <div class="user-info">
+                            <h3>${review.name}</h3>
+                            <span>happy customer</span>
+                        </div>
+                    </div>
+                </div>`;
+        });
+        document.querySelector('.review-container').innerHTML = html;
     });
 </script>
 
